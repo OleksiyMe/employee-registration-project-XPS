@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 public class Employee {
     private String firstName;
     private String lastName;
+    //tHYMELEAF RETURNS   YYYY-mm-DD, BUT lOCALdATE ACCEPTS MM-DD-yyyy or yyyy-dd-mm
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     private String email;
     private String password;

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/employee")
 public class EmployeeController {
@@ -32,9 +34,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/insert")
-    public String insertEmployee(@ModelAttribute("employee") Employee employee) {
+    public String insertEmployee(@ModelAttribute("employee") @Valid Employee employee,
+                                 BindingResult bindingResult, Model model) {
 
-        employeeService.saveEmployee(employee);
+        if (bindingResult.hasErrors()){
+            model.addAttribute("stateList", DataGenerator.getAllStates());
+            return "/employee/employee-create";
+        }
+
+            employeeService.saveEmployee(employee);
         return "redirect:/employee/list";   // With redirect we are using endpoints
     }
 
